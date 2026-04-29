@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.toad.ui.screens.App
+import com.example.toad.ui.screens.LoginScreen
 import com.example.toad.ui.theme.ToadTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,28 +22,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             ToadTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    App(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ToadTheme {
-        Greeting("Android")
     }
 }
