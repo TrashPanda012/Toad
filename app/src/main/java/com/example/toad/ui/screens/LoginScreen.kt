@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -34,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.toad.ui.theme.GreenPrimary
@@ -50,7 +52,7 @@ fun LoginScreen(onLogin: () -> Unit){
     var attemptedLogin by remember { mutableStateOf(false) }
     
     val isCifValid = cif.length == 8 && cif.all { it.isDigit() }
-    val isPasswordValid = password.length >= 8
+    val isPasswordValid = password.length >= 4
 
     val cifError = attemptedLogin && !isCifValid
     val passwordError = attemptedLogin && !isPasswordValid
@@ -87,10 +89,11 @@ fun LoginScreen(onLogin: () -> Unit){
             Column(modifier = Modifier.padding(24.dp)) {
                 OutlinedTextField(
                     value = cif,
-                    onValueChange = { if (it.length <= 8) cif = it },
+                    onValueChange = { if (it.length <= 8 && it.all { char -> char.isDigit() }) cif = it },
                     label = { Text("CIF") },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     isError = cifError,
                     supportingText = {
                         if(cifError){
@@ -109,7 +112,7 @@ fun LoginScreen(onLogin: () -> Unit){
                     isError = passwordError,
                     supportingText = {
                         if (passwordError) {
-                            Text("La contraseña debe tener al menos 8 caracteres")
+                            Text("La contraseña debe tener al menos 4 caracteres")
                         }
                     },
                     visualTransformation =
